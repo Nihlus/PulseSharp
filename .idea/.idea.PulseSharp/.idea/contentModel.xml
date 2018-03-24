@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.Rider2018.1/system/resharper-host/local/Transient/ReSharperHost/v12/SolutionCaches/_PulseSharp.1836682550.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.nuget/packages/advanceddlsupport/1.1.0/contentFiles/any/netstandard2.0/AdvancedDLSupport.ExternalAnnotations.xml" t="Include" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
+      <e p="PulseSharp" t="IncludeRecursive">
+        <e p="AsyncPulseAudioOperation.cs" t="Include" />
+        <e p="Context" t="Include">
+          <e p="PulseContext.cs" t="Include" />
+        </e>
+        <e p="Enums" t="Include">
+          <e p="ChannelPosition.cs" t="Include" />
+          <e p="PulseAudioOperationState.cs" t="Include" />
+          <e p="PulseContextFlags.cs" t="Include" />
+          <e p="PulseContextState.cs" t="Include" />
+          <e p="SampleFormat.cs" t="Include" />
+          <e p="StreamDirection.cs" t="Include" />
+        </e>
+        <e p="FodyWeavers.xml" t="Include" />
+        <e p="Interfaces" t="Include">
+          <e p="IPulseAudioOperation.cs" t="Include" />
+          <e p="IPulseContext.cs" t="Include" />
+          <e p="IPulseError.cs" t="Include" />
+          <e p="ISimplePulse.cs" t="Include" />
+        </e>
+        <e p="MainLoopAbstractions" t="Include">
+          <e p="IMinimalMainLoopAPI.cs" t="Include" />
+          <e p="IThreadedMainLoop.cs" t="Include" />
+          <e p="MinimalMainLoop.cs" t="Include" />
+          <e p="ThreadedMainLoop.cs" t="Include" />
+          <e p="ThreadedMainLoopLock.cs" t="Include" />
+        </e>
+        <e p="Native" t="Include">
+          <e p="PulseAudioObject.cs" t="Include" />
+          <e p="PulseAudioSafeHandle.cs" t="Include" />
+        </e>
+        <e p="PulseSharp.ExternalAnnotations.xml" t="Include" />
+        <e p="PulseSharp.csproj" t="IncludeRecursive" />
+        <e p="PulseSharp.xml" t="Include" />
+        <e p="Simple" t="Include">
+          <e p="SimpleConnection.cs" t="Include" />
+        </e>
+        <e p="Structures" t="Include">
+          <e p="BufferAttributes.cs" t="Include" />
+          <e p="ChannelMap.cs" t="Include" />
+          <e p="SampleSpecification.cs" t="Include" />
+          <e p="ServerInfo.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="PulseSharp.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="PulseSharp.Playground" t="IncludeRecursive">
+        <e p="Program.cs" t="Include" />
+        <e p="PulseSharp.Playground.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net462" t="Include">
+              <e p="PulseSharp.Playground.AssemblyInfo.cs" t="Include" />
+            </e>
+            <e p="netcoreapp2.0" t="Include">
+              <e p="PulseSharp.Playground.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="PulseSharp.sln" t="IncludeFlat" />
+      <e p="README.md" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="stylecop.json" t="Include" />
+      <e p="stylecop.ruleset" t="Include" />
+    </e>
+  </component>
+</project>

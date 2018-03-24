@@ -1,0 +1,875 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PulseSharp</name>
+    </assembly>
+    <members>
+        <member name="T:PulseSharp.AsyncPulseAudioOperation">
+            <summary>
+            Represents an asynchronous PulseAudio operation.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.AsyncPulseAudioOperation.#ctor(System.IntPtr)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.AsyncPulseAudioOperation"/> class.
+            </summary>
+            <param name="operationPtr">A handle to the native operation.</param>
+        </member>
+        <member name="M:PulseSharp.AsyncPulseAudioOperation.SetStateChangedCallback(PulseSharp.Interfaces.PulseAudioStateChanged)">
+            <summary>
+            Sets the callback to call if the operation's state changes.
+            </summary>
+            <param name="callback">The callback.</param>
+        </member>
+        <member name="M:PulseSharp.AsyncPulseAudioOperation.Cancel">
+            <summary>
+            Cancels the operation.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.AsyncPulseAudioOperation.GetState">
+            <summary>
+            Gets the current state of the operation.
+            </summary>
+            <returns>The state.</returns>
+        </member>
+        <member name="T:PulseSharp.Context.PulseContext">
+            <summary>
+            Context class for a connection to the PulseAudio server.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.#ctor(PulseSharp.MainLoopAbstractions.ThreadedMainLoop,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.Context.PulseContext"/> class.
+            </summary>
+            <param name="mainLoop">An abstract mainloop pointer.</param>
+            <param name="applicationName">A descriptive application name.</param>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.GetState">
+            <summary>
+            Gets the state of the context.
+            </summary>
+            <returns>The state.</returns>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.SetStateCallback(System.Action{System.IntPtr,System.IntPtr})">
+            <summary>
+            Sets the context's state callback.
+            </summary>
+            <param name="callback">The callback.</param>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.Connect">
+            <summary>
+            Connects the context.
+            </summary>
+            <returns>true if the connection succeded, otherwise, false.</returns>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.ConnectAsync">
+            <summary>
+            Connects to the pulseaudio daemon.
+            </summary>
+            <returns>A task that must be awaited.</returns>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.DisconnectAsync">
+            <summary>
+            Disconnects the connection to the pulseaudio daemon.
+            </summary>
+            <returns>A task that must be awaited.</returns>
+        </member>
+        <member name="M:PulseSharp.Context.PulseContext.GetServerInfoAsync">
+            <summary>
+            Gets some information about the PulseAudio server.
+            </summary>
+            <returns>Some info.</returns>
+        </member>
+        <member name="T:PulseSharp.Enums.ChannelPosition">
+            <summary>
+            A list of channel labels.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Enums.PulseAudioOperationState">
+            <summary>
+            The state of an operation.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseAudioOperationState.Running">
+            <summary>
+            The operation is still running.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseAudioOperationState.Done">
+            <summary>
+            The operation has completed.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseAudioOperationState.Cancelled">
+            <summary>
+            The operation has been cancelled.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Enums.PulseContextFlags">
+            <summary>
+            Context flags.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextFlags.None">
+            <summary>
+            No specific options.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextFlags.NoAutoSpawn">
+            <summary>
+            Don't autospawn the daemon.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextFlags.NoFail">
+            <summary>
+            Don't fail if the daemon isn't available on connection - instead, enter the connecting state and wait.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Enums.PulseContextState">
+            <summary>
+            The state of a connection context.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.Disconnected">
+            <summary>
+            The context hasn't been connected yet.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.Connecting">
+            <summary>
+            A connection is being established.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.Authorizing">
+            <summary>
+            The client is authorizing to the daemon.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.SettingName">
+            <summary>
+            The client is passing the application name to the daemon.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.Ready">
+            <summary>
+            The connection is established, and the context is ready to execute operations.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.Failed">
+            <summary>
+            The connection failed or was disconnected.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Enums.PulseContextState.Terminated">
+            <summary>
+            The connection was terminated cleanly.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Enums.SampleFormat">
+            <summary>
+            Sample formats.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Enums.StreamDirection">
+            <summary>
+            The direction of a pa_stream object.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Interfaces.IPulseAudioOperation">
+            <summary>
+            Native API for asynchronous PulseAudio operation objects.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseAudioOperation.Cancel(System.IntPtr)">
+            <summary>
+            Cancels the given operation.
+            </summary>
+            <param name="operation">The operation</param>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseAudioOperation.GetState(System.IntPtr)">
+            <summary>
+            Gets the current status of the operation.
+            </summary>
+            <param name="operation">The operation</param>
+            <returns>The status.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseAudioOperation.Ref(System.IntPtr)">
+            <summary>
+            Increases the reference count by one.
+            </summary>
+            <param name="operation">The operation</param>
+            <returns>The operation, with its reference count incremented.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseAudioOperation.SetStateCallback(System.IntPtr,PulseSharp.Interfaces.PulseAudioOperationNotify,System.IntPtr)">
+            <summary>
+            Sets the callback function that is called when the operation state changes.
+            </summary>
+            <param name="operation">The operation</param>
+            <param name="callback">The callback.</param>
+            <param name="userData">Arbitrary user data.</param>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseAudioOperation.Unref(System.IntPtr)">
+            <summary>
+            Decrements the reference count by one.
+            </summary>
+            <param name="operation">The operation</param>
+        </member>
+        <member name="T:PulseSharp.Interfaces.PulseAudioOperationNotify">
+            <summary>
+            State change callback.
+            </summary>
+            <param name="operation">The operation.</param>
+            <param name="userData">Arbitrary user data.</param>
+        </member>
+        <member name="T:PulseSharp.Interfaces.PulseAudioStateChanged">
+            <summary>
+            Managed state change callback.
+            </summary>
+            <param name="state">The current state of the operation.</param>
+        </member>
+        <member name="T:PulseSharp.Interfaces.IPulseContext">
+            <summary>
+            Native API for the PulseAudio context functions.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.New(System.IntPtr,System.String)">
+            <summary>
+            Creates a new PulseAudio onctext with the given name.
+            </summary>
+            <param name="mainloopApi">A pointer to an abstract mainloop implementation.</param>
+            <param name="applicationName">A descriptive application name.</param>
+            <returns>A new context.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.Connect(System.IntPtr,System.String,PulseSharp.Enums.PulseContextFlags,System.IntPtr)">
+            <summary>
+            Connect to the PulseAudio daemon.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="server">The name of the server to connect to, or null.</param>
+            <param name="flags">Optional flags.</param>
+            <param name="spawnApi">Optional process spawning API.</param>
+            <returns>Unknown.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.Disconnect(System.IntPtr)">
+            <summary>
+            Immediately terminate the connection to the server.
+            </summary>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.Unref(System.IntPtr)">
+            <summary>
+            Decrements the reference count on the given context.
+            </summary>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.Ref(System.IntPtr)">
+            <summary>
+            Increments the reference count on the given context.
+            </summary>
+            <param name="context">The context.</param>
+            <returns>The context, with the reference count incremented.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.GetServerInfo(System.IntPtr,PulseSharp.Interfaces.PulseAudioServerInfoCallback,System.IntPtr)">
+            <summary>
+            Gets some information about the server.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="callback">The result callback.</param>
+            <param name="userData">Some arbitrary data.</param>
+            <returns>An asynchronous operation handle.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.SetStateCallback(System.IntPtr,PulseSharp.Interfaces.PulseAudioContextNotifyCallback,System.IntPtr)">
+            <summary>
+            Sets the callback function that is called whenever the context status changes.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="callback">The callback.</param>
+            <param name="userData">Arbitrary user data.</param>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseContext.GetState(System.IntPtr)">
+            <summary>
+            Gets the current state of the context.
+            </summary>
+            <param name="context">The context.</param>
+            <returns>The state.s</returns>
+        </member>
+        <member name="T:PulseSharp.Interfaces.PulseAudioContextNotifyCallback">
+            <summary>
+            Generic notification callback prototype.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="userData">Arbitrary user data.</param>
+        </member>
+        <member name="T:PulseSharp.Interfaces.PulseAudioServerInfoCallback">
+            <summary>
+            Callback prototype for <see cref="M:PulseSharp.Interfaces.IPulseContext.GetServerInfo(System.IntPtr,PulseSharp.Interfaces.PulseAudioServerInfoCallback,System.IntPtr)"/>.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="info">The retrieved <see cref="T:PulseSharp.Structures.ServerInfo"/>.</param>
+            <param name="userData">Some arbitrary data.</param>
+        </member>
+        <member name="T:PulseSharp.Interfaces.IPulseError">
+            <summary>
+            Error management.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Interfaces.IPulseError.GetErrorString(System.Int32)">
+            <summary>
+            Return a human readable error message for the specified numeric error code.
+            </summary>
+            <param name="error">The error code.</param>
+            <returns>A human readable error message.</returns>
+        </member>
+        <member name="T:PulseSharp.Interfaces.ISimplePulse">
+            <summary>
+            Native interface for the simple PulseAudio API.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.New(System.String,System.String,PulseSharp.Enums.StreamDirection,System.String,System.String,PulseSharp.Structures.SampleSpecification@,System.Nullable{PulseSharp.Structures.ChannelMap}@,System.Nullable{PulseSharp.Structures.BufferAttributes}@,System.Int32@)">
+            <summary>
+            Creates a new connection to the server.
+            </summary>
+            <param name="server">The server name, or null for default.</param>
+            <param name="name">A descriptive client name</param>
+            <param name="direction">The direction of the stream (recording or playback).</param>
+            <param name="device">The sink or source name, or null for default.</param>
+            <param name="streamName">A descriptive name for the stream.</param>
+            <param name="spec">The sample type to use.</param>
+            <param name="channelMap">The channel map to use, or null for default.</param>
+            <param name="bufferAttributes">The buffering attributes, or null for default.</param>
+            <param name="error">The error, if any.</param>
+            <returns>An opaque connection object.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.Free(System.IntPtr)">
+             <summary>
+             Close and free the connection to the server.
+            
+             The connection object becomes invalid when this is called.
+             </summary>
+             <param name="connection">The opaque connection object.</param>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.Write(System.IntPtr,System.Void*,System.UIntPtr,System.Int32@)">
+            <summary>
+            Writes some data to the server.
+            </summary>
+            <param name="connection">The connection to the server.</param>
+            <param name="data">A pointer to the data.</param>
+            <param name="size">The size in bytes of the data.</param>
+            <param name="error">The error, if any.</param>
+            <returns>positive on success; otherwise, negative.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.Drain(System.IntPtr,System.Int32@)">
+            <summary>
+            Wait until all data already written is played by the daemon.
+            </summary>
+            <param name="connection">The connection to the server.</param>
+            <param name="error">The error, if any.</param>
+            <returns>positive on success; otherwise, negative.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.Read(System.IntPtr,System.Void*,System.UIntPtr,System.Int32@)">
+            <summary>
+            Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
+            received from the server, or until an error occurs.
+            </summary>
+            <param name="connection">The connection to the server.</param>
+            <param name="buffer">A pointer to an allocated buffer.</param>
+            <param name="bytes">The number of bytes to read.</param>
+            <param name="error">The error, if any.</param>
+            <returns>positive on success; otherwise, negative.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.GetLatency(System.IntPtr,System.Int32@)">
+            <summary>
+            Gets the playback or record latency.
+            </summary>
+            <param name="connection">The connection to the server.</param>
+            <param name="error">The error, if any.</param>
+            <returns>The latency, in µs.</returns>
+        </member>
+        <member name="M:PulseSharp.Interfaces.ISimplePulse.Flush(System.IntPtr,System.Int32@)">
+             <summary>
+             Flush the playback or audio buffer.
+            
+             This discards any audio in the buffer.
+             </summary>
+             <param name="connection">The connection to the server.</param>
+             <param name="error">The error, if any.</param>
+             <returns>positive on success; otherwise, negative.</returns>
+        </member>
+        <member name="T:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI">
+            <summary>
+            Represents a mainloop creation API from pulseaudio.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.New">
+            <summary>
+            Creates a new mainloop object.
+            </summary>
+            <returns>A handle to the object.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.GetAPI(System.IntPtr)">
+            <summary>
+            Gets a pointer to a vtable of API functions in the given mainloop object.
+            </summary>
+            <param name="handle">A handle to a mainloop object.</param>
+            <returns>The vtable pointer.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.Free(System.IntPtr)">
+            <summary>
+            Frees the underlying simple main loop object.
+            </summary>
+            <param name="handle">A handle to a mainloop object.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.Run(System.IntPtr,System.Int32@)">
+            <summary>
+            Run an unlimited number of iterations until <see cref="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.Quit(System.IntPtr,System.Int32)"/> is called.
+            </summary>
+            <param name="handle">The mainloop object.</param>
+            <param name="retVal">The return value.</param>
+            <returns>Unclear.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.Quit(System.IntPtr,System.Int32)">
+            <summary>
+            Quits the main loop iteration.
+            </summary>
+            <param name="handle">The mainloop object.</param>
+            <param name="retVal">The return value.</param>
+        </member>
+        <member name="T:PulseSharp.MainLoopAbstractions.IThreadedMainLoop">
+            <summary>
+            Threaded mainloop native API.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.New">
+            <summary>
+            Allocate a new threaded main loop object.
+            </summary>
+            <returns>The loop.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Free(System.IntPtr)">
+            <summary>
+            Free a threaded main loop object.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Start(System.IntPtr)">
+            <summary>
+            Start the event loop thread.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+            <returns>true if the loop could not be started; otherwise, false.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Stop(System.IntPtr)">
+            <summary>
+            Terminate the event loop cleanly.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Lock(System.IntPtr)">
+            <summary>
+            Lock the event loop object, effectively blocking the event loop thread from processing events.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Unlock(System.IntPtr)">
+            <summary>
+            Unlock the event loop object, inverse of <see cref="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Lock(System.IntPtr)"/>
+            </summary>
+            <param name="mainLoop">The loop.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Wait(System.IntPtr)">
+            <summary>
+            Wait for an event to be signalled by the event loop thread.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Signal(System.IntPtr,System.Boolean)">
+             <summary>
+             Signal all threads waiting for a signalling event in <see cref="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Wait(System.IntPtr)"/>.
+            
+             If waitForAccept is nonzero, does not return until the signal is accepted by a <see cref="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Accept(System.IntPtr)"/> call.
+             While waiting for that condition, the event loop is unlocked.
+             </summary>
+             <param name="mainLoop">The loop.</param>
+             <param name="waitForAccept">Whether or not to wait for the signal to be accepted.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Accept(System.IntPtr)">
+            <summary>
+            Accept a signal from the event thread issued with <see cref="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.Signal(System.IntPtr,System.Boolean)"/>.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.GetRetVal(System.IntPtr)">
+            <summary>
+            Return the return value as specified with the main loop's <see cref="M:PulseSharp.MainLoopAbstractions.IMinimalMainLoopAPI.Quit(System.IntPtr,System.Int32)"/> routine.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+            <returns>The return value.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.GetAPI(System.IntPtr)">
+            <summary>
+            Return the main loop abstraction layer vtable for this main loop.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+            <returns>A vtable pointer.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.InThread(System.IntPtr)">
+            <summary>
+            Returns nonzero when called from within the event loop thread.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+            <returns>true if inside the event loop thread; otherwise, false.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.IThreadedMainLoop.SetName(System.IntPtr,System.String)">
+            <summary>
+            Sets the name of the thread.
+            </summary>
+            <param name="mainLoop">The loop.</param>
+            <param name="name">The name</param>
+        </member>
+        <member name="T:PulseSharp.MainLoopAbstractions.MinimalMainLoop">
+            <summary>
+            Represents a minimal mainloop implementation in PulseAudio.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.MinimalMainLoop.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.MainLoopAbstractions.MinimalMainLoop"/> class.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.MinimalMainLoop.GetAPI">
+            <summary>
+            Gets a pointer to a vtable of API functions.
+            </summary>
+            <returns>The pointer.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.MinimalMainLoop.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:PulseSharp.MainLoopAbstractions.ThreadedMainLoop">
+            <summary>
+            Represents a threaded mainloop implementation in PulseAudio.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.MainLoopAbstractions.ThreadedMainLoop"/> class.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Start">
+            <summary>
+            Starts the main loop thread.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Stop">
+            <summary>
+            Stops the main loop thread.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.AcquireLock">
+            <summary>
+            Acquires a lock on the main loop. This lock has to be disposed to unlock the loop.
+            </summary>
+            <returns>A locking object.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Wait">
+            <summary>
+            Wait for an event to be signalled by the event loop thread.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Lock">
+            <summary>
+            Locks the main loop.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Unlock">
+            <summary>
+            Unlocks the main loop.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Signal(System.Boolean)">
+             <summary>
+             Signal all threads waiting for a signalling event in <see cref="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Wait"/>.
+            
+             If waitForAccept is nonzero, does not return until the signal is accepted by an <see cref="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Accept"/> call.
+             While waiting for that condition, the event loop is unlocked.
+             </summary>
+             <param name="waitForAccept">Whether or not to wait for the signal to be accepted.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Accept">
+            <summary>
+            Accept a signal from the event thread issued with <see cref="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Signal(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.GetAPI">
+            <summary>
+            Gets a pointer to a vtable of API functions.
+            </summary>
+            <returns>The pointer.</returns>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoop.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:PulseSharp.MainLoopAbstractions.ThreadedMainLoopLock">
+            <summary>
+            Represents a transient loop lock.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoopLock.#ctor(PulseSharp.MainLoopAbstractions.ThreadedMainLoop)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.MainLoopAbstractions.ThreadedMainLoopLock"/> class.
+            </summary>
+            <param name="loop">The loop to lock.</param>
+        </member>
+        <member name="M:PulseSharp.MainLoopAbstractions.ThreadedMainLoopLock.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:PulseSharp.Native.PulseAudioObject">
+            <summary>
+            Represents a native PulseAudio object.
+            </summary>
+        </member>
+        <member name="P:PulseSharp.Native.PulseAudioObject.Handle">
+            <summary>
+            Gets the handle to the underlying object.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Native.PulseAudioObject.#ctor(System.Func{System.IntPtr},System.Action{System.IntPtr})">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.Native.PulseAudioObject"/> class.
+            </summary>
+            <param name="createFunc">The function used to create a new object.</param>
+            <param name="freeAction">The function used to free an allocated object.</param>
+        </member>
+        <member name="M:PulseSharp.Native.PulseAudioObject.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:PulseSharp.Native.PulseAudioSafeHandle">
+            <summary>
+            Represents a safe handle to a PulseAudio object.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Native.PulseAudioSafeHandle.#ctor(System.Func{System.IntPtr},System.Action{System.IntPtr})">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.Native.PulseAudioSafeHandle"/> class.
+            </summary>
+            <param name="createFunc">A function which creates a handle to an object.</param>
+            <param name="freeAction">An action which frees a handle to an object.</param>
+        </member>
+        <member name="M:PulseSharp.Native.PulseAudioSafeHandle.ReleaseHandle">
+            <inheritdoc />
+        </member>
+        <member name="T:PulseSharp.Simple.SimpleConnection">
+            <summary>
+            A simple connection to the PulseAudio server, equivalent to pa_simple.
+            </summary>
+        </member>
+        <member name="P:PulseSharp.Simple.SimpleConnection.Latency">
+            <summary>
+            Gets the latency of the connection.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.#ctor(System.String,System.String,PulseSharp.Enums.StreamDirection,PulseSharp.Structures.SampleSpecification,System.String,System.String,System.Nullable{PulseSharp.Structures.ChannelMap},System.Nullable{PulseSharp.Structures.BufferAttributes})">
+            <summary>
+            Initializes a new instance of the <see cref="T:PulseSharp.Simple.SimpleConnection"/> class.
+            </summary>
+            <param name="connectionName">The name of the connection.</param>
+            <param name="streamName">The name of the stream.</param>
+            <param name="direction">The direction of the stream.</param>
+            <param name="sampleSpec">The sample format.</param>
+            <param name="serverName">The name of the server to connect to.</param>
+            <param name="deviceName">The name of the device to use.</param>
+            <param name="channelMap">The channel map to use.</param>
+            <param name="bufferAttributes">The buffering attributes.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if a connection could not be established.</exception>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.Write(System.Byte[])">
+            <summary>
+            Writes some data to the server.
+            </summary>
+            <param name="data">The data to write.</param>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.Read(System.Int32)">
+            <summary>
+            Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
+            received from the server, or until an error occurs.
+            </summary>
+            <param name="bytes">The number of bytes to read.</param>
+            <returns>An array containing the data.</returns>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.Read(System.Byte[],System.Nullable{System.Int32})">
+            <summary>
+            Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
+            received from the server, or until an error occurs.
+            </summary>
+            <param name="buffer">The buffer to read the data into.</param>
+            <param name="bytes">The number of bytes to read.</param>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.Drain">
+            <summary>
+            Wait until all data already written is played by the daemon.
+            </summary>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.Flush">
+             <summary>
+             Flush the playback or audio buffer.
+            
+             This discards any audio in the buffer.
+             </summary>
+        </member>
+        <member name="M:PulseSharp.Simple.SimpleConnection.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:PulseSharp.Structures.BufferAttributes">
+            <summary>
+            Playback and record buffer metrics.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.BufferAttributes.MaxLength">
+             <summary>
+             Maximum length of the buffer in bytes.
+            
+             Setting this to (uint32_t) -1 will initialize this to the maximum value supported by server, which is
+             recommended.
+            
+             In strict low-latency playback scenarios you might want to set this to a lower value, likely together with
+             the PA_STREAM_ADJUST_LATENCY flag. If you do so, you ensure that the latency doesn't grow beyond what is
+             acceptable for the use case, at the cost of getting more underruns if the latency is lower than what the
+             server can reliably handle.
+             </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.BufferAttributes.TargetLength">
+             <summary>
+             Playback only.
+            
+             The server tries to assure that at least tlength bytes are always available in the per-stream server-side
+             playback buffer. It is recommended to set this to (uint32_t) -1, which will initialize this to a value that
+             is deemed sensible by the server. However, this value will default to something like 2s, i.e. for
+             applications that have specific latency requirements this value should be set to the maximum latency that
+             the application can deal with. When PA_STREAM_ADJUST_LATENCY is not set this value will influence only the
+             per-stream playback buffer size. When PA_STREAM_ADJUST_LATENCY is set the overall latency of the sink plus
+             the playback buffer size is configured to this value. Set PA_STREAM_ADJUST_LATENCY if you are interested in
+             adjusting the overall latency. Don't set it if you are interested in configuring the server-side per-stream
+             playback buffer size.
+             </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.BufferAttributes.PreBuffering">
+             <summary>
+             Playback only.
+            
+             The server does not start with playback before at least prebuf bytes are available in the buffer. It is
+             recommended to set this to (uint32_t) -1, which will initialize this to the same value as tlength,
+             whatever that may be. Initialize to 0 to enable manual start/stop control of the stream. This means that
+             playback will not stop on underrun and playback will not start automatically. Instead pa_stream_cork() needs
+             to be called explicitly. If you set this value to 0 you should also set PA_STREAM_START_CORKED.
+             </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.BufferAttributes.MinimumRequest">
+             <summary>
+             Playback only.
+            
+             The server does not request less than minreq bytes from the client, instead waits until the buffer is free
+             enough to request more bytes at once. It is recommended to set this to (uint32_t) -1, which will initialize
+             this to a value that is deemed sensible by the server. This should be set to a value that gives PulseAudio
+             enough time to move the data from the per-stream playback buffer into the hardware playback buffer.
+             </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.BufferAttributes.FragmentSize">
+             <summary>
+             Recording only.
+            
+             The server sends data in blocks of fragsize bytes size. Large values diminish interactivity with other
+             operations on the connection context but decrease control overhead. It is recommended to set this to
+             (uint32_t) -1, which will initialize this to a value that is deemed sensible by the server. However, this
+             value will default to something like 2s, i.e. for applications that have specific latency requirements this
+             value should be set to the maximum latency that the application can deal with. If PA_STREAM_ADJUST_LATENCY
+             is set the overall source latency will be adjusted according to this value. If it is not set the source
+             latency is left unmodified.
+             </summary>
+        </member>
+        <member name="T:PulseSharp.Structures.ChannelMap">
+            <summary>
+            A channel map which can be used to attach labels to specific channels of a stream.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ChannelMap.ChannelCount">
+            <summary>
+            Gets the number of channels.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ChannelMap.Map">
+            <summary>
+            Gets the channel labels.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Structures.SampleSpecification">
+            <summary>
+            A sample format and attribute specification.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.SampleSpecification.Format">
+            <summary>
+            Gets the sample format.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.SampleSpecification.Rate">
+            <summary>
+            Gets the sample rate.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.SampleSpecification.ChannelCount">
+            <summary>
+            Gets the number of audio channels.
+            </summary>
+        </member>
+        <member name="T:PulseSharp.Structures.ServerInfo">
+            <summary>
+            An informational struct about the PulseAudio server.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.Username">
+            <summary>
+            The user name of the daemon process.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.Hostname">
+            <summary>
+            The host name the daemon is running on.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.Version">
+            <summary>
+            The version string of the daemon.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.Name">
+            <summary>
+            The server package name (usually "pulseaudio").
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.SampleSpecification">
+            <summary>
+            The default sample specification.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.DefaultSinkName">
+            <summary>
+            The name of the default sink.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.DefaultSourceName">
+            <summary>
+            The name of the default source.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.Cookie">
+            <summary>
+            A random cookie for identifying this daemon instance.
+            </summary>
+        </member>
+        <member name="F:PulseSharp.Structures.ServerInfo.ChannelMap">
+            <summary>
+            The default channel map.
+            </summary>
+        </member>
+    </members>
+</doc>

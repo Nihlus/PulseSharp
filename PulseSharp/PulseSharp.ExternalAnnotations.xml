@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly name="PulseSharp">
+  <member name="T:PulseSharp.Enums.ChannelPosition">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="T:PulseSharp.Enums.SampleFormat">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="T:PulseSharp.Enums.StreamDirection">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Interfaces.ISimplePulse.New(System.String,System.String,PulseSharp.Enums.StreamDirection,System.String,System.String,PulseSharp.Structures.SampleSpecification@,System.Nullable{PulseSharp.Structures.ChannelMap}@,System.Nullable{PulseSharp.Structures.BufferAttributes}@,System.Int32@)">
+    <parameter name="server">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="device">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="streamName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="channelMap">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="bufferAttributes">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:PulseSharp.Simple.SimpleConnection.Read(System.Byte[],System.Nullable{System.Int32})">
+    <parameter name="buffer">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+</assembly>
