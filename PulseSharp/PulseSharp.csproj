@@ -46,7 +46,7 @@
   <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="1.1.0" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" PrivateAssets="all" />
-    <PackageReference Include="JetBrainsAnnotations.Fody" Version="2.0.0" PrivateAssets="all" />
+    <PackageReference Include="JetBrainsAnnotations.Fody" Version="2.1.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
 </Project>

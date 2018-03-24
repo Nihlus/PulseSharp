@@ -21,6 +21,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AdvancedDLSupport;
+using JetBrains.Annotations;
 using PulseSharp.Enums;
 using PulseSharp.Interfaces;
 using PulseSharp.MainLoopAbstractions;
@@ -32,6 +33,7 @@ namespace PulseSharp.Context
 	/// <summary>
 	/// Context class for a connection to the PulseAudio server.
 	/// </summary>
+	[PublicAPI]
 	public class PulseContext : PulseAudioObject
 	{
 		private static readonly IPulseContext API;
@@ -41,8 +43,10 @@ namespace PulseSharp.Context
 			API = NativeLibraryBuilder.Default.ActivateInterface<IPulseContext>("pulse");
 		}
 
-		private object StateCallbackLock = new object();
+		private readonly object StateCallbackLock = new object();
+
 		private bool IsConnected { get; set; }
+
 		private ThreadedMainLoop MainLoop { get; }
 
 		/// <summary>
@@ -50,6 +54,7 @@ namespace PulseSharp.Context
 		/// </summary>
 		/// <param name="mainLoop">An abstract mainloop pointer.</param>
 		/// <param name="applicationName">A descriptive application name.</param>
+		[PublicAPI]
 		public PulseContext(ThreadedMainLoop mainLoop, string applicationName)
 			: base(() => API.New(mainLoop.GetAPI(), applicationName), API.Unref)
 		{
@@ -60,6 +65,7 @@ namespace PulseSharp.Context
 		/// Gets the state of the context.
 		/// </summary>
 		/// <returns>The state.</returns>
+		[PublicAPI]
 		public PulseContextState GetState()
 		{
 			using (this.MainLoop.AcquireLock())
@@ -72,6 +78,7 @@ namespace PulseSharp.Context
 		/// Sets the context's state callback.
 		/// </summary>
 		/// <param name="callback">The callback.</param>
+		[PublicAPI]
 		public void SetStateCallback(Action<IntPtr, IntPtr> callback)
 		{
 			using (this.MainLoop.AcquireLock())
@@ -89,6 +96,7 @@ namespace PulseSharp.Context
 		/// Connects to the pulseaudio daemon.
 		/// </summary>
 		/// <returns>A task that must be awaited.</returns>
+		[PublicAPI]
 		public Task ConnectAsync()
 		{
 			if (this.IsConnected)
@@ -147,6 +155,7 @@ namespace PulseSharp.Context
 		/// Disconnects the connection to the pulseaudio daemon.
 		/// </summary>
 		/// <returns>A task that must be awaited.</returns>
+		[PublicAPI]
 		public Task DisconnectAsync()
 		{
 			if (!this.IsConnected)
@@ -202,6 +211,7 @@ namespace PulseSharp.Context
 		/// Gets some information about the PulseAudio server.
 		/// </summary>
 		/// <returns>Some info.</returns>
+		[PublicAPI]
 		public Task<ServerInfo> GetServerInfoAsync()
 		{
 			var tcs = new TaskCompletionSource<ServerInfo>();

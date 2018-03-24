@@ -56,12 +56,6 @@
             </summary>
             <param name="callback">The callback.</param>
         </member>
-        <member name="M:PulseSharp.Context.PulseContext.Connect">
-            <summary>
-            Connects the context.
-            </summary>
-            <returns>true if the connection succeded, otherwise, false.</returns>
-        </member>
         <member name="M:PulseSharp.Context.PulseContext.ConnectAsync">
             <summary>
             Connects to the pulseaudio daemon.
@@ -658,19 +652,19 @@
         <member name="M:PulseSharp.Native.PulseAudioSafeHandle.ReleaseHandle">
             <inheritdoc />
         </member>
-        <member name="T:PulseSharp.Simple.SimpleConnection">
+        <member name="T:PulseSharp.Simple.SimplePulseStream">
             <summary>
             A simple connection to the PulseAudio server, equivalent to pa_simple.
             </summary>
         </member>
-        <member name="P:PulseSharp.Simple.SimpleConnection.Latency">
+        <member name="P:PulseSharp.Simple.SimplePulseStream.Latency">
             <summary>
             Gets the latency of the connection.
             </summary>
         </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.#ctor(System.String,System.String,PulseSharp.Enums.StreamDirection,PulseSharp.Structures.SampleSpecification,System.String,System.String,System.Nullable{PulseSharp.Structures.ChannelMap},System.Nullable{PulseSharp.Structures.BufferAttributes})">
+        <member name="M:PulseSharp.Simple.SimplePulseStream.#ctor(System.String,System.String,PulseSharp.Enums.StreamDirection,PulseSharp.Structures.SampleSpecification,System.String,System.String,System.Nullable{PulseSharp.Structures.ChannelMap},System.Nullable{PulseSharp.Structures.BufferAttributes})">
             <summary>
-            Initializes a new instance of the <see cref="T:PulseSharp.Simple.SimpleConnection"/> class.
+            Initializes a new instance of the <see cref="T:PulseSharp.Simple.SimplePulseStream"/> class.
             </summary>
             <param name="connectionName">The name of the connection.</param>
             <param name="streamName">The name of the stream.</param>
@@ -682,41 +676,52 @@
             <param name="bufferAttributes">The buffering attributes.</param>
             <exception cref="T:System.InvalidOperationException">Thrown if a connection could not be established.</exception>
         </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.Write(System.Byte[])">
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Write(System.Byte[])">
             <summary>
             Writes some data to the server.
             </summary>
             <param name="data">The data to write.</param>
         </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.Read(System.Int32)">
-            <summary>
-            Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
-            received from the server, or until an error occurs.
-            </summary>
-            <param name="bytes">The number of bytes to read.</param>
-            <returns>An array containing the data.</returns>
-        </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.Read(System.Byte[],System.Nullable{System.Int32})">
-            <summary>
-            Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
-            received from the server, or until an error occurs.
-            </summary>
-            <param name="buffer">The buffer to read the data into.</param>
-            <param name="bytes">The number of bytes to read.</param>
-        </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.Drain">
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Drain">
             <summary>
             Wait until all data already written is played by the daemon.
             </summary>
         </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.Flush">
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Flush">
              <summary>
              Flush the playback or audio buffer.
             
              This discards any audio in the buffer.
              </summary>
         </member>
-        <member name="M:PulseSharp.Simple.SimpleConnection.Dispose">
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <inheritdoc />
+        </member>
+        <member name="M:PulseSharp.Simple.SimplePulseStream.SetLength(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="P:PulseSharp.Simple.SimplePulseStream.CanRead">
+            <inheritdoc />
+        </member>
+        <member name="P:PulseSharp.Simple.SimplePulseStream.CanWrite">
+            <inheritdoc />
+        </member>
+        <member name="P:PulseSharp.Simple.SimplePulseStream.CanSeek">
+            <inheritdoc />
+        </member>
+        <member name="P:PulseSharp.Simple.SimplePulseStream.Length">
+            <inheritdoc />
+        </member>
+        <member name="P:PulseSharp.Simple.SimplePulseStream.Position">
+            <inheritdoc />
+        </member>
+        <member name="M:PulseSharp.Simple.SimplePulseStream.Dispose(System.Boolean)">
             <inheritdoc />
         </member>
         <member name="T:PulseSharp.Structures.BufferAttributes">

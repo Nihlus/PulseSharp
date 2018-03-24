@@ -1,5 +1,5 @@
 ﻿//
-//  SimpleConnection.cs
+//  SimplePulseStream.cs
 //
 //  Copyright (c) 2018 Jarl Gullberg
 //
@@ -18,6 +18,7 @@
 //
 
 using System;
+using System.IO;
 using AdvancedDLSupport;
 using JetBrains.Annotations;
 using PulseSharp.Enums;
@@ -29,23 +30,26 @@ namespace PulseSharp.Simple
 	/// <summary>
 	/// A simple connection to the PulseAudio server, equivalent to pa_simple.
 	/// </summary>
-	public class SimpleConnection : IDisposable
+	[PublicAPI]
+	public class SimplePulseStream : Stream
 	{
 		private const string LibraryName = "pulse-simple";
 		private static readonly ISimplePulse SimplePulse;
 		private static readonly IPulseError PulseError;
 
-		static SimpleConnection()
+		static SimplePulseStream()
 		{
 			SimplePulse = NativeLibraryBuilder.Default.ActivateInterface<ISimplePulse>(LibraryName);
 			PulseError = NativeLibraryBuilder.Default.ActivateInterface<IPulseError>(LibraryName);
 		}
 
+		private readonly StreamDirection Direction;
 		private readonly IntPtr Connection;
 
 		/// <summary>
 		/// Gets the latency of the connection.
 		/// </summary>
+		[PublicAPI]
 		public ulong Latency
 		{
 			get
@@ -62,7 +66,7 @@ namespace PulseSharp.Simple
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SimpleConnection"/> class.
+		/// Initializes a new instance of the <see cref="SimplePulseStream"/> class.
 		/// </summary>
 		/// <param name="connectionName">The name of the connection.</param>
 		/// <param name="streamName">The name of the stream.</param>
@@ -73,7 +77,8 @@ namespace PulseSharp.Simple
 		/// <param name="channelMap">The channel map to use.</param>
 		/// <param name="bufferAttributes">The buffering attributes.</param>
 		/// <exception cref="InvalidOperationException">Thrown if a connection could not be established.</exception>
-		public SimpleConnection
+		[PublicAPI]
+		public SimplePulseStream
 		(
 			string connectionName,
 			string streamName,
@@ -105,12 +110,15 @@ namespace PulseSharp.Simple
 					$"Failed to initialize the connection to the PulseAudio server: {PulseError.GetErrorString(error)}"
 				);
 			}
+
+			this.Direction = direction;
 		}
 
 		/// <summary>
 		/// Writes some data to the server.
 		/// </summary>
 		/// <param name="data">The data to write.</param>
+		[PublicAPI]
 		public void Write(byte[] data)
 		{
 			unsafe
@@ -129,52 +137,9 @@ namespace PulseSharp.Simple
 		}
 
 		/// <summary>
-		/// Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
-		/// received from the server, or until an error occurs.
-		/// </summary>
-		/// <param name="bytes">The number of bytes to read.</param>
-		/// <returns>An array containing the data.</returns>
-		public byte[] Read(int bytes)
-		{
-			var buffer = new byte[bytes];
-			Read(buffer);
-
-			return buffer;
-		}
-
-		/// <summary>
-		/// Reads some data from the server. This function blocks until <paramref name="bytes"/> amount of data has been
-		/// received from the server, or until an error occurs.
-		/// </summary>
-		/// <param name="buffer">The buffer to read the data into.</param>
-		/// <param name="bytes">The number of bytes to read.</param>
-		public void Read([NotNull] byte[] buffer, int? bytes = null)
-		{
-			bytes = bytes ?? buffer.Length;
-
-			if (bytes > buffer.Length)
-			{
-				throw new ArgumentOutOfRangeException(nameof(bytes));
-			}
-
-			unsafe
-			{
-				fixed (void* ptr = buffer)
-				{
-					var numBytes = new UIntPtr((uint)bytes.Value);
-
-					var success = SimplePulse.Read(this.Connection, ptr, numBytes, out int error) > -1;
-					if (!success)
-					{
-						throw new InvalidOperationException(PulseError.GetErrorString(error));
-					}
-				}
-			}
-		}
-
-		/// <summary>
 		/// Wait until all data already written is played by the daemon.
 		/// </summary>
+		[PublicAPI]
 		public void Drain()
 		{
 			var success = SimplePulse.Drain(this.Connection, out int error) > -1;
@@ -189,7 +154,8 @@ namespace PulseSharp.Simple
 		///
 		/// This discards any audio in the buffer.
 		/// </summary>
-		public void Flush()
+		[PublicAPI]
+		public override void Flush()
 		{
 			var success = SimplePulse.Flush(this.Connection, out int error) > -1;
 			if (!success)
@@ -199,12 +165,111 @@ namespace PulseSharp.Simple
 		}
 
 		/// <inheritdoc />
-		public void Dispose()
+		[PublicAPI]
+		public override int Read(byte[] buffer, int offset, int count)
+		{
+			count = count == 0
+				? count
+				: buffer.Length;
+
+			if (offset + count > buffer.Length)
+			{
+				throw new ArgumentOutOfRangeException(nameof(count));
+			}
+
+			int bytesRead;
+			unsafe
+			{
+				fixed (byte* basePtr = buffer)
+				{
+					var targetPtr = basePtr + offset;
+
+					var numBytes = new UIntPtr((uint)count);
+
+					bytesRead = SimplePulse.Read(this.Connection, targetPtr, numBytes, out var error);
+					var success = bytesRead > -1;
+					if (!success)
+					{
+						throw new InvalidOperationException(PulseError.GetErrorString(error));
+					}
+				}
+			}
+
+			return bytesRead;
+		}
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override void Write(byte[] buffer, int offset, int count)
+		{
+			count = count == 0
+				? count
+				: buffer.Length;
+
+			if (offset + count > buffer.Length)
+			{
+				throw new ArgumentOutOfRangeException(nameof(count));
+			}
+
+			unsafe
+			{
+				fixed (byte* basePtr = buffer)
+				{
+					var targetPtr = basePtr + offset;
+
+					var numBytes = new UIntPtr((uint)count);
+					var success = SimplePulse.Write(this.Connection, targetPtr, numBytes, out var error) > -1;
+					if (!success)
+					{
+						throw new InvalidOperationException(PulseError.GetErrorString(error));
+					}
+				}
+			}
+		}
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override void SetLength(long value) => throw new NotSupportedException();
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override bool CanRead => this.Direction == StreamDirection.Record;
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override bool CanWrite =>
+			this.Direction == StreamDirection.Playback ||
+			this.Direction == StreamDirection.Upload;
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override bool CanSeek => false;
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override long Length => throw new NotSupportedException();
+
+		/// <inheritdoc />
+		[PublicAPI]
+		public override long Position
+		{
+			get => throw new NotSupportedException();
+			set => throw new NotSupportedException();
+		}
+
+		/// <inheritdoc />
+		protected override void Dispose(bool disposing)
 		{
 			if (this.Connection != IntPtr.Zero)
 			{
 				SimplePulse.Free(this.Connection);
 			}
+
+			base.Dispose(disposing);
 		}
 	}
 }

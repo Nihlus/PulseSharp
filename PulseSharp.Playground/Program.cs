@@ -18,6 +18,17 @@ namespace PulseSharp.Playground
 		{
 			AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
+			PlaySimpleAudio();
+			//await PlayComplexAudio();
+		}
+
+		private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			Console.WriteLine(e.ExceptionObject);
+		}
+
+		static async Task PlayComplexAudio()
+		{
 			using (var mainloop = new ThreadedMainLoop())
 			using (var context = new PulseContext(mainloop, "PulseSharp.Playground"))
 			{
@@ -27,11 +38,6 @@ namespace PulseSharp.Playground
 
 				await context.DisconnectAsync();
 			}
-		}
-
-		private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
-		{
-			Console.WriteLine(e.ExceptionObject);
 		}
 
 		static void PlaySimpleAudio()
@@ -46,7 +52,7 @@ namespace PulseSharp.Playground
 				Rate = (uint)mp3.Frequency
 			};
 
-			using (var connection = new SimpleConnection
+			using (var connection = new SimplePulseStream
 			(
 				"PulseSharp.Playground",
 				"Playback",

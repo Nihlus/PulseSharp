@@ -1,5 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="PulseSharp">
+  <member name="T:PulseSharp.Context.PulseContext">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Context.PulseContext.#ctor(PulseSharp.MainLoopAbstractions.ThreadedMainLoop,System.String)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Context.PulseContext.ConnectAsync">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Context.PulseContext.DisconnectAsync">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Context.PulseContext.GetServerInfoAsync">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Context.PulseContext.GetState">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Context.PulseContext.SetStateCallback(System.Action{System.IntPtr,System.IntPtr})">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
   <member name="T:PulseSharp.Enums.ChannelPosition">
     <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
   </member>
@@ -29,9 +50,49 @@
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:PulseSharp.Simple.SimpleConnection.Read(System.Byte[],System.Nullable{System.Int32})">
-    <parameter name="buffer">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
+  <member name="T:PulseSharp.Simple.SimplePulseStream">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.#ctor(System.String,System.String,PulseSharp.Enums.StreamDirection,PulseSharp.Structures.SampleSpecification,System.String,System.String,System.Nullable{PulseSharp.Structures.ChannelMap},System.Nullable{PulseSharp.Structures.BufferAttributes})">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="P:PulseSharp.Simple.SimplePulseStream.CanRead">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="P:PulseSharp.Simple.SimplePulseStream.CanSeek">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="P:PulseSharp.Simple.SimplePulseStream.CanWrite">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.Drain">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.Flush">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="P:PulseSharp.Simple.SimplePulseStream.Latency">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="P:PulseSharp.Simple.SimplePulseStream.Length">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="P:PulseSharp.Simple.SimplePulseStream.Position">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.Read(System.Byte[],System.Int32,System.Int32)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.Seek(System.Int64,System.IO.SeekOrigin)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.SetLength(System.Int64)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.Write(System.Byte[])">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
+  </member>
+  <member name="M:PulseSharp.Simple.SimplePulseStream.Write(System.Byte[],System.Int32,System.Int32)">
+    <attribute ctor="M:JetBrains.Annotations.PublicAPIAttribute.#ctor" />
   </member>
 </assembly>
