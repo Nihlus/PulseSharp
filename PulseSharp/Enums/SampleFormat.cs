@@ -45,6 +45,6 @@ namespace PulseSharp.Enums
 		S24_32LE,
 		S24_32BE,
 		Max,
-		Invalid
+		Invalid = -1
 	}
 }
